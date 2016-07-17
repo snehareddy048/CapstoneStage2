@@ -36,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivityFragment extends Fragment {
     ArrayList<MovieClass> movieDetails = new ArrayList<>();
     ArrayList<Integer> movieIds = new ArrayList<>();
+    ArrayList<String> movieType = new ArrayList<>();
     GridView gridview;
     public final String FAVORITE_MOVIES = "favorite_movies";
     public final String MOVIE_KEY = "movie_list_key";
@@ -88,17 +89,17 @@ public class MainActivityFragment extends Fragment {
 
 
             Cursor c = getActivity().getContentResolver().query(movies, null, null, null, MoviesProvider._ID);
-
             if (c != null && c.moveToFirst()) {
                 do {
                     Integer movieId = c.getInt(c.getColumnIndex(MoviesProvider._ID));
                     movieIds.add(movieId);
+                    movieType.add(c.getString(c.getColumnIndex(MoviesProvider.SEARCH_RESULT_TYPE)));
                 } while (c.moveToNext());
             }
 
             for (Integer movieId : movieIds) {
                 Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().
-                        appendPath(Utils.PATH_MOVIE).appendPath(movieId.toString())
+                        appendPath(movieType.get(movieIds.indexOf(movieId))).appendPath(movieId.toString())
                         .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
                 String MOVIE_DB_URL = builtUri.toString();
                 JsonArray movieJsonArray = new JsonArray();
@@ -117,8 +118,8 @@ public class MainActivityFragment extends Fragment {
                 }
             }
         } else {
-            Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath("discover").
-                    appendPath(Utils.PATH_MOVIE).appendQueryParameter("sort_by", sortType + ".desc")
+            Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(Utils.PATH_SEARCH).
+                    appendPath(Utils.PATH_MULTI).appendQueryParameter(Utils.PATH_QUERY, "ross")
                     .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
             String MOVIE_DB_URL = builtUri.toString();
 

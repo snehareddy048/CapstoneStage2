@@ -10,6 +10,8 @@ public class MovieClass implements Parcelable {
 
     private Integer id;
 
+    private String media_type;
+
     private String original_title;
 
     private String poster_path;
@@ -79,6 +81,13 @@ public class MovieClass implements Parcelable {
         this.display_image = display_image;
     }
 
+    public String getMedia_type() {
+        return media_type;
+    }
+
+    public void setMedia_type(String media_type) {
+        this.media_type = media_type;
+    }
 
     @Override
     public int describeContents() {
@@ -93,6 +102,7 @@ public class MovieClass implements Parcelable {
         release_date = in.readString();
         vote_average = in.readFloat();
         display_image = in.readString();
+        media_type=in.readString();
     }
 
     @Override
@@ -104,6 +114,7 @@ public class MovieClass implements Parcelable {
         dest.writeString(release_date);
         dest.writeFloat(vote_average);
         dest.writeString(display_image);
+        dest.writeString(media_type);
     }
 
     public static final Parcelable.Creator<MovieClass> CREATOR

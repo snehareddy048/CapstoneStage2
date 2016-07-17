@@ -11,7 +11,9 @@ public interface Utils
     String MOVIEDB_BASE_URL ="http://api.themoviedb.org/3/";
     String YOUTUBE_BASE_URL="https://www.youtube.com/watch";
     String CONTENT_BASE_URL="com.example.provider.MovieDB";
-    String PATH_MOVIE="movie";
+    String PATH_MULTI="multi";
+    String PATH_SEARCH="search";
+    String PATH_QUERY="query";
     String PATH_REVIEWS="reviews";
     String PATH_VIDEOS="videos";
     String QUERY_PARAMETER_API="api_key";
@@ -19,5 +21,6 @@ public interface Utils
     String RESULTS="results";
     String API_KEY="a9b7cc3f0852ce9d2f83d7ae160fce44";
     String MOVIES_TEXT="movies";
+
 }
 

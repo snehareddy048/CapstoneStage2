@@ -78,12 +78,12 @@ public class DetailsActivityFragment extends Fragment {
             movieDetails = arguments.getParcelable(Utils.MOVIE_DETAILS);
             if(movieDetails!=null)
             {
-                Uri reviewUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(Utils.PATH_MOVIE).
+                Uri reviewUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(movieDetails.getMedia_type()).
                         appendPath(movieDetails.getId().toString()).appendPath(Utils.PATH_REVIEWS)
                         .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
                 String GET_REVIEWS_URL = reviewUri.toString();
 
-                Uri trailerUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(Utils.PATH_MOVIE).
+                Uri trailerUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(movieDetails.getMedia_type()).
                         appendPath(movieDetails.getId().toString()).appendPath(Utils.PATH_VIDEOS)
                         .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
                 String GET_TRAILERS_URL = trailerUri.toString();
@@ -135,6 +135,7 @@ public class DetailsActivityFragment extends Fragment {
                             favorite.setText(FAVORITE_TEXT);
                             ContentValues values = new ContentValues();
                             values.put(MoviesProvider._ID, movieDetails.getId());
+                            values.put(MoviesProvider.SEARCH_RESULT_TYPE, movieDetails.getMedia_type());
                             getActivity().getContentResolver().insert(
                                     MoviesProvider.CONTENT_URI, values);
                             unchecked(movieId);

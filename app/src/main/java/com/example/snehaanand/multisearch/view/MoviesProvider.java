@@ -27,17 +27,19 @@ public class MoviesProvider  extends ContentProvider {
 
 
     static final String _ID = "id";
-
+    static final String SEARCH_RESULT_TYPE = "type";
     private static HashMap<String, String> MOVIES_PROJECTION_MAP;
 
-    static final int MOVIES = 1;
-    static final int MOVIE_ID = 2;
+    static final int SEARCH_RESULT = 1;
+
+//    static final int SEARCH_RESULT_ID = 2;
+//    static final int SEARCH_RESULT_TYPE = 3;
 
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT, MOVIES);
-        uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT+"/#", MOVIE_ID);
+        uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT, SEARCH_RESULT);
+//        uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT+"/#", SEARCH_RESULT_TYPE);
     }
 
     /**
@@ -49,7 +51,8 @@ public class MoviesProvider  extends ContentProvider {
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + MOVIES_TABLE_NAME +
-                    " ("+_ID+" INTEGER NOT NULL UNIQUE );";
+                    " ("+_ID+" INTEGER NOT NULL UNIQUE, "+
+    SEARCH_RESULT_TYPE+" TEXT NOT NULL);";
 
     /**
      * Helper class that actually creates and manages
@@ -112,13 +115,13 @@ public class MoviesProvider  extends ContentProvider {
         queryBuilder.setTables(MOVIES_TABLE_NAME);
 
         switch (uriMatcher.match(uri)) {
-            case MOVIES:
+            case SEARCH_RESULT:
                 queryBuilder.setProjectionMap(MOVIES_PROJECTION_MAP);
                 break;
 
-            case MOVIE_ID:
-                queryBuilder.appendWhere(_ID + "=" + uri.getPathSegments().get(1));
-                break;
+//            case SEARCH_RESULT_ID:
+//                queryBuilder.appendWhere(_ID + "=" + uri.getPathSegments().get(1));
+//                break;
 
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -144,15 +147,15 @@ public class MoviesProvider  extends ContentProvider {
         int count = 0;
 
         switch (uriMatcher.match(uri)){
-            case MOVIES:
+            case SEARCH_RESULT:
                 count = db.delete(MOVIES_TABLE_NAME, selection, selectionArgs);
                 break;
 
-            case MOVIE_ID:
-                String id = uri.getPathSegments().get(1);
-                count = db.delete(MOVIES_TABLE_NAME, _ID +  " = " + id +
-                        (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
-                break;
+//            case SEARCH_RESULT_ID:
+//                String id = uri.getPathSegments().get(1);
+//                count = db.delete(MOVIES_TABLE_NAME, _ID +  " = " + id +
+//                        (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+//                break;
 
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -167,14 +170,14 @@ public class MoviesProvider  extends ContentProvider {
         int count = 0;
 
         switch (uriMatcher.match(uri)){
-            case MOVIES:
+            case SEARCH_RESULT:
                 count = db.update(MOVIES_TABLE_NAME, values, selection, selectionArgs);
                 break;
 
-            case MOVIE_ID:
-                count = db.update(MOVIES_TABLE_NAME, values, _ID + " = " + uri.getPathSegments().get(1) +
-                        (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
-                break;
+//            case SEARCH_RESULT_ID:
+//                count = db.update(MOVIES_TABLE_NAME, values, _ID + " = " + uri.getPathSegments().get(1) +
+//                        (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+//                break;
 
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri );
@@ -189,14 +192,14 @@ public class MoviesProvider  extends ContentProvider {
             /**
              * Get all movie records
              */
-            case MOVIES:
+            case SEARCH_RESULT:
                 return "vnd.android.cursor.dir/vnd.example."+Utils.MOVIES_TEXT;
 
             /**
              * Get a particular movie
              */
-            case MOVIE_ID:
-                return "vnd.android.cursor.item/vnd.example."+Utils.MOVIES_TEXT;
+//            case SEARCH_RESULT_ID:
+//                return "vnd.android.cursor.item/vnd.example."+Utils.MOVIES_TEXT;
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);

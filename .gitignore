@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -6,12 +5,11 @@
 .DS_Store
 /build
 /captures
-=======
 # Built application files
 *.apk
 *.ap_
 
-# Files for the ART/Dalvik VM
+# Files for the Dalvik VM
 *.dex
 
 # Java class files
@@ -20,7 +18,6 @@
 # Generated files
 bin/
 gen/
-out/
 
 # Gradle files
 .gradle/
@@ -40,11 +37,3 @@ proguard/
 
 # Android Studio captures folder
 captures/
-
-# Intellij
-*.iml
-.idea/workspace.xml
-
-# Keystore files
-*.jks
->>>>>>> a4f66f0334ec0a810fc399d0ffed0893e62ebd50
