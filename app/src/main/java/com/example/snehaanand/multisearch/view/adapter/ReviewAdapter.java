@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view.adapter;
+package com.example.snehaanand.multisearch.view.adapter;
 
 /**
  * Created by snehaanandyeluguri on 10/18/15.
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.snehaanand.moviesapp.R;
+import com.example.snehaanand.multisearch.R;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,9 @@
-package com.example.snehaanand.moviesapp.view;
+package com.example.snehaanand.multisearch.view;
 
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,18 +17,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.snehaanand.moviesapp.R;
-import com.example.snehaanand.moviesapp.model.MovieClass;
-import com.example.snehaanand.moviesapp.network.DownloadWebPageTask;
-import com.example.snehaanand.moviesapp.utils.Utils;
-import com.example.snehaanand.moviesapp.view.adapter.ImageAdapter;
+import com.example.snehaanand.multisearch.R;
+import com.example.snehaanand.multisearch.model.MovieClass;
+import com.example.snehaanand.multisearch.network.DownloadWebPageTask;
+import com.example.snehaanand.multisearch.utils.Utils;
+import com.example.snehaanand.multisearch.view.adapter.ImageAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;

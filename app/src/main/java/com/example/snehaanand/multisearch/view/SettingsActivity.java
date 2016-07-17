@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view;
+package com.example.snehaanand.multisearch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.example.snehaanand.moviesapp.R;
+import com.example.snehaanand.multisearch.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.

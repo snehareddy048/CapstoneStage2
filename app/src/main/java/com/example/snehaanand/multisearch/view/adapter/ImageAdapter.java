@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view.adapter;
+package com.example.snehaanand.multisearch.view.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -6,11 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.snehaanand.moviesapp.model.MovieClass;
+import com.example.snehaanand.multisearch.model.MovieClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by snehaanandyeluguri on 9/6/15.

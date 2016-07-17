@@ -1,9 +1,7 @@
-package com.example.snehaanand.moviesapp.view;
+package com.example.snehaanand.multisearch.view;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,17 +14,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.snehaanand.moviesapp.R;
-import com.example.snehaanand.moviesapp.model.MovieClass;
-import com.example.snehaanand.moviesapp.model.ReviewClass;
-import com.example.snehaanand.moviesapp.model.TrailerClass;
-import com.example.snehaanand.moviesapp.network.DownloadWebPageTask;
-import com.example.snehaanand.moviesapp.utils.Utils;
-import com.example.snehaanand.moviesapp.view.MoviesProvider;
-import com.example.snehaanand.moviesapp.view.adapter.ReviewAdapter;
-import com.example.snehaanand.moviesapp.view.adapter.TrailerAdapter;
+import com.example.snehaanand.multisearch.R;
+import com.example.snehaanand.multisearch.model.MovieClass;
+import com.example.snehaanand.multisearch.model.ReviewClass;
+import com.example.snehaanand.multisearch.model.TrailerClass;
+import com.example.snehaanand.multisearch.network.DownloadWebPageTask;
+import com.example.snehaanand.multisearch.utils.Utils;
+import com.example.snehaanand.multisearch.view.adapter.ReviewAdapter;
+import com.example.snehaanand.multisearch.view.adapter.TrailerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

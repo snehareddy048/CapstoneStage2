@@ -1,6 +1,5 @@
-package com.example.snehaanand.moviesapp.model;
+package com.example.snehaanand.multisearch.model;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 

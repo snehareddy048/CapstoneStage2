@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view;
+package com.example.snehaanand.multisearch.view;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.example.snehaanand.moviesapp.utils.Utils;
+import com.example.snehaanand.multisearch.utils.Utils;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view.adapter;
+package com.example.snehaanand.multisearch.view.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.snehaanand.moviesapp.R;
+import com.example.snehaanand.multisearch.R;
 
 import java.util.ArrayList;
 

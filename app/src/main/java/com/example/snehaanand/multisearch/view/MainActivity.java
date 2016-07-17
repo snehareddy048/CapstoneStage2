@@ -1,4 +1,4 @@
-package com.example.snehaanand.moviesapp.view;
+package com.example.snehaanand.multisearch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.snehaanand.moviesapp.R;
-import com.example.snehaanand.moviesapp.model.MovieClass;
-import com.example.snehaanand.moviesapp.utils.Utils;
+import com.example.snehaanand.multisearch.R;
+import com.example.snehaanand.multisearch.model.MovieClass;
+import com.example.snehaanand.multisearch.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.PaneSelection {
 Boolean mTwoPane;
