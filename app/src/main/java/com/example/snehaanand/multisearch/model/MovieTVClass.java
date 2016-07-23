@@ -30,11 +30,13 @@ public class MovieTVClass implements Parcelable {
     protected MovieTVClass(Parcel in) {
         release_date = in.readString();
         first_air_date = in.readString();
+        id=in.readInt();
         media_type = in.readString();
         original_title = in.readString();
         poster_path = in.readString();
         overview = in.readString();
         display_image = in.readString();
+        vote_average=in.readFloat();
     }
 
     public static final Creator<MovieTVClass> CREATOR = new Creator<MovieTVClass>() {

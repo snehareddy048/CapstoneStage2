@@ -90,10 +90,12 @@ public class DetailsActivityFragment extends Fragment {
 
                 try {
                     JsonObject jsonObject = new DownloadWebPageTask().execute(GET_REVIEWS_URL).get();
-                    JsonArray jsonArray = jsonObject.getAsJsonArray(Utils.RESULTS);
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        ReviewClass reviewData = new Gson().fromJson(jsonArray.get(i), ReviewClass.class);
-                        reviewDetails.add(reviewData);
+                    if(jsonObject!=null) {
+                        JsonArray jsonArray = jsonObject.getAsJsonArray(Utils.RESULTS);
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            ReviewClass reviewData = new Gson().fromJson(jsonArray.get(i), ReviewClass.class);
+                            reviewDetails.add(reviewData);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -103,10 +105,12 @@ public class DetailsActivityFragment extends Fragment {
 
                 try {
                     JsonObject jsonObject = new DownloadWebPageTask().execute(GET_TRAILERS_URL).get();
-                    JsonArray jsonArray = jsonObject.getAsJsonArray(Utils.RESULTS);
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        TrailerClass trailerData = new Gson().fromJson(jsonArray.get(i), TrailerClass.class);
-                        trailerDetails.add(trailerData);
+                    if(jsonObject!=null) {
+                        JsonArray jsonArray = jsonObject.getAsJsonArray(Utils.RESULTS);
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            TrailerClass trailerData = new Gson().fromJson(jsonArray.get(i), TrailerClass.class);
+                            trailerDetails.add(trailerData);
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
