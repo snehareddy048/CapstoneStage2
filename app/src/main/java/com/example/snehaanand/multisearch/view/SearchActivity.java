@@ -1,6 +1,8 @@
 package com.example.snehaanand.multisearch.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -23,37 +25,31 @@ EditText searchBar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        searchBar=(EditText)findViewById(R.id.searchTitle);
-        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // your action here
-                    Toast.makeText(SearchActivity.this, searchBar.getText(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                    intent.putExtra(Utils.SEARCH_STRING,  searchBar.getText().toString());
-                    startActivity(intent);
-                    return true;
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String sortType = sharedPrefs.getString(getString(R.string.pref_sort_key), Utils.SEARCH);
+        if(sortType.equalsIgnoreCase(Utils.FAVORITE)){
+            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+            intent.putExtra(Utils.SORT_STRING, Utils.FAVORITE);
+            startActivity(intent);
+        }else {
+            searchBar = (EditText) findViewById(R.id.searchTitle);
+            searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        // your action here
+                        Toast.makeText(SearchActivity.this, searchBar.getText(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        intent.putExtra(Utils.SORT_STRING, Utils.SEARCH);
+                        intent.putExtra(Utils.SEARCH_STRING, searchBar.getText().toString());
+                        startActivity(intent);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
-//        searchBar.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                // If the event is a key-down event on the "enter" button
-//                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-//                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-//                    // Perform action on key press
-//                    Toast.makeText(SearchActivity.this, searchBar.getText(), Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-//                    intent.putExtra(Utils.SEARCH_STRING,  searchBar.getText().toString());
-//                    startActivity(intent);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+            });
+        }
 
     }
 
