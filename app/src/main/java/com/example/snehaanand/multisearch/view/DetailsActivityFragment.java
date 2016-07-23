@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.snehaanand.multisearch.R;
-import com.example.snehaanand.multisearch.model.MovieClass;
+import com.example.snehaanand.multisearch.model.MovieTVClass;
 import com.example.snehaanand.multisearch.model.ReviewClass;
 import com.example.snehaanand.multisearch.model.TrailerClass;
 import com.example.snehaanand.multisearch.network.DownloadWebPageTask;
@@ -42,7 +42,7 @@ public class DetailsActivityFragment extends Fragment {
     ArrayList<String> author=new ArrayList<>();
     ArrayList<String> content=new ArrayList<>();
     ArrayList<String> trailerName=new ArrayList<>();
-    MovieClass movieDetails;
+    MovieTVClass movieDetails;
     static final String TRAILERS_KEY="trailers";
     static final String REVIEWS_KEY="reviews";
     static final String MOVIE_DETAILS_KEY="movie_details";

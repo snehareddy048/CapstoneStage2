@@ -4,32 +4,27 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.example.snehaanand.multisearch.view.MainActivity"
-            >
+        <activity android:name=".view.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.snehaanand.multisearch.view.DetailsActivity"
-            android:parentActivityName="com.example.snehaanand.multisearch.view.MainActivity" >
-            ></activity>
-        <activity
-            android:name="com.example.snehaanand.multisearch.view.SettingsActivity"
-            ></activity>
-
+        <activity android:name=".view.DetailsActivity"></activity>
+        <activity android:name=".view.SettingsActivity"></activity>
+        <activity android:name=".view.MainActivity"></activity>
         <provider
-            android:name="com.example.snehaanand.multisearch.view.MoviesProvider"
-            android:authorities="com.example.provider.MovieDB"
-        ></provider>
+            android:name=".view.MoviesProvider"
+            android:authorities="com.example.provider.MovieDB" />
+
+
     </application>
 
 </manifest>

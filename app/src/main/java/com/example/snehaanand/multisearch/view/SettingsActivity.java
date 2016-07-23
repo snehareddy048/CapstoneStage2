@@ -65,7 +65,7 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, SearchActivity.class);
         startActivity(intent);
     }
 
