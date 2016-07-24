@@ -2,14 +2,12 @@ package com.example.snehaanand.multisearch.view;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.snehaanand.multisearch.R;
-import com.example.snehaanand.multisearch.model.MovieTVClass;
+import com.example.snehaanand.multisearch.model.MovieTVPersonClass;
 import com.example.snehaanand.multisearch.network.DownloadWebPageTask;
 import com.example.snehaanand.multisearch.utils.Utils;
 import com.example.snehaanand.multisearch.view.adapter.ImageAdapter;
@@ -34,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  * Created by snehaanandyeluguri on 10/31/15.
  */
 public class MainActivityFragment extends Fragment {
-    ArrayList<MovieTVClass> movieDetails = new ArrayList<>();
+    ArrayList<MovieTVPersonClass> movieDetails = new ArrayList<>();
     ArrayList<Integer> movieIds = new ArrayList<>();
     ArrayList<String> movieType = new ArrayList<>();
     GridView gridview;
@@ -51,14 +49,20 @@ public class MainActivityFragment extends Fragment {
 
     private class GetImageTask extends AsyncTask<JsonArray, Void, List> {
         @Override
-        protected List<MovieTVClass> doInBackground(JsonArray... jsonArray) {
+        protected List<MovieTVPersonClass> doInBackground(JsonArray... jsonArray) {
             return parseResult(jsonArray[0]);
         }
 
-        private List<MovieTVClass> parseResult(JsonArray jsonArray) {
+        private List<MovieTVPersonClass> parseResult(JsonArray jsonArray) {
             for (int i = 0; i < jsonArray.size(); i++) {
-                MovieTVClass data = new Gson().fromJson(jsonArray.get(i), MovieTVClass.class);
+                MovieTVPersonClass data = new Gson().fromJson(jsonArray.get(i), MovieTVPersonClass.class);
+                if(data.getMedia_type().equalsIgnoreCase(Utils.PERSON)){
+                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
+
+                }
+                else {
                     data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
+                }
                     movieDetails.add(data);
             }
             return movieDetails;
@@ -78,7 +82,7 @@ public class MainActivityFragment extends Fragment {
         gridview.setAdapter(imageAdapter);
         if (savedInstanceState != null) {
             movieIds = savedInstanceState.getIntegerArrayList(FAVORITE_MOVIES);
-            movieDetails = (ArrayList<MovieTVClass>) savedInstanceState.get(MOVIE_KEY);
+            movieDetails = (ArrayList<MovieTVPersonClass>) savedInstanceState.get(MOVIE_KEY);
             imageAdapter.setGridData(movieDetails);
         } else if (!isNetworkAvailable()) {
             Toast.makeText(getActivity().getBaseContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
@@ -103,7 +107,7 @@ public class MainActivityFragment extends Fragment {
                 try {
                     JsonObject jsonObject = new DownloadWebPageTask().execute(MOVIE_DB_URL).get();
                     movieJsonArray.add(jsonObject);
-                    movieDetails = (ArrayList<MovieTVClass>) new GetImageTask().execute(movieJsonArray).get();
+                    movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(movieJsonArray).get();
                     if (movieDetails != null) {
                         imageAdapter.setGridData(movieDetails);
                     }
@@ -125,7 +129,7 @@ public class MainActivityFragment extends Fragment {
             try {
                 JsonObject jsonObject = new DownloadWebPageTask().execute(MOVIE_DB_URL).get();
                 JsonArray jsonArray = jsonObject.getAsJsonArray(Utils.RESULTS);
-                movieDetails = (ArrayList<MovieTVClass>) new GetImageTask().execute(jsonArray).get();
+                movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(jsonArray).get();
                 if (movieDetails != null) {
                     imageAdapter.setGridData(movieDetails);
                 }
@@ -139,7 +143,7 @@ public class MainActivityFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                MovieTVClass movieClass = movieDetails.get(position);
+                MovieTVPersonClass movieClass = movieDetails.get(position);
                 Cursor cursor = getActivity().getContentResolver().query(movies, null, MoviesProvider._ID+"=?", new String[]{movieClass.getId().toString()}, MoviesProvider._ID);
                 boolean favoriteSetting=false;
                 cursor.moveToFirst();
@@ -160,7 +164,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     public interface PaneSelection {
-        void onItemSelection(MovieTVClass movieClass, Boolean favoriteSetting);
+        void onItemSelection(MovieTVPersonClass movieClass, Boolean favoriteSetting);
     }
 
     @Override

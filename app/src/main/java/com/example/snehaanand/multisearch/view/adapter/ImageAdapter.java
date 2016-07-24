@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.snehaanand.multisearch.model.MovieTVClass;
+import com.example.snehaanand.multisearch.model.MovieTVPersonClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.ArrayList;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<MovieTVClass> thumbIds = new ArrayList();
+    private ArrayList<MovieTVPersonClass> thumbIds = new ArrayList();
 
-    public ImageAdapter(Context c, ArrayList<MovieTVClass> movieBitmaps) {
+    public ImageAdapter(Context c, ArrayList<MovieTVPersonClass> movieBitmaps) {
         context = c;
         thumbIds = movieBitmaps;
     }
 
-    public ImageAdapter(Context c, ArrayList<String> list,ArrayList<MovieTVClass> movieBitmaps) {
+    public ImageAdapter(Context c, ArrayList<String> list,ArrayList<MovieTVPersonClass> movieBitmaps) {
         context = c;
         thumbIds = movieBitmaps;
     }
@@ -55,7 +55,7 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-    public void setGridData(ArrayList<MovieTVClass> MovieClassObjects) {
+    public void setGridData(ArrayList<MovieTVPersonClass> MovieClassObjects) {
         this.thumbIds = MovieClassObjects;
         notifyDataSetChanged();
     }

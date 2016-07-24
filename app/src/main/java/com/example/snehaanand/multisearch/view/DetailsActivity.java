@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.snehaanand.multisearch.R;
-import com.example.snehaanand.multisearch.model.MovieTVClass;
+import com.example.snehaanand.multisearch.model.MovieTVPersonClass;
 import com.example.snehaanand.multisearch.utils.Utils;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -17,7 +17,7 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle arguments = new Bundle();
 
         Bundle bundle = getIntent().getExtras();
-        MovieTVClass movieClass = bundle.getParcelable(Utils.MOVIE_DETAILS_ACTIVITY);
+        MovieTVPersonClass movieClass = bundle.getParcelable(Utils.MOVIE_DETAILS_ACTIVITY);
         Boolean favoriteSetting = bundle.getBoolean(Utils.FAVORITE_SETTING);
         arguments.putParcelable(Utils.MOVIE_DETAILS, movieClass);
         arguments.putBoolean(Utils.FAVORITE_MOVIE_ID,favoriteSetting);

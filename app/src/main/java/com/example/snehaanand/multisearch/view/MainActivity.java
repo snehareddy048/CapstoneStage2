@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.snehaanand.multisearch.R;
-import com.example.snehaanand.multisearch.model.MovieTVClass;
+import com.example.snehaanand.multisearch.model.MovieTVPersonClass;
 import com.example.snehaanand.multisearch.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.PaneSelection {
@@ -36,7 +36,7 @@ Boolean mTwoPane;
 
 
     @Override
-    public void onItemSelection(MovieTVClass movieClass,Boolean favoriteSetting) {
+    public void onItemSelection(MovieTVPersonClass movieClass, Boolean favoriteSetting) {
         if(mTwoPane){
             Bundle arguments = new Bundle();
             arguments.putParcelable(Utils.MOVIE_DETAILS, movieClass);

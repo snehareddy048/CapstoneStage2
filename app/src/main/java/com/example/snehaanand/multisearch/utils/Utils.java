@@ -19,12 +19,16 @@ public interface Utils
     String QUERY_PARAMETER_API="api_key";
     String FAVORITE_MOVIE_ID="favorite_id";
     String RESULTS="results";
-    String API_KEY="a9b7cc3f0852ce9d2f83d7ae160fce44";
+    String API_KEY="YOUR_API_KEY";
     String MOVIES_TEXT="movies";
     String SEARCH_STRING="search_string";
 
     String SORT_STRING="sort_string";
     String FAVORITE="favorite";
     String SEARCH="search";
+    //media_type
+    String PERSON="person";
+    String TV="tv";
+    String MOVIE="movie";
 }
 
