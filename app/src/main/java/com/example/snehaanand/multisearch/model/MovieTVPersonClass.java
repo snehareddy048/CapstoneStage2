@@ -23,7 +23,7 @@ public class MovieTVPersonClass implements Parcelable {
 
     private String original_name;
 
-    private Float vote_average=0.0f;
+    private Float vote_average;
 
     //movie
     private String release_date;
@@ -49,7 +49,6 @@ public class MovieTVPersonClass implements Parcelable {
         poster_path = in.readString();
         first_air_date = in.readString();
         original_name = in.readString();
-        vote_average=in.readFloat();
         release_date = in.readString();
         original_title = in.readString();
         media_type = in.readString();
@@ -57,6 +56,7 @@ public class MovieTVPersonClass implements Parcelable {
         profile_path = in.readString();
         popularity = in.readFloat();
         display_image = in.readString();
+        vote_average=in.readFloat();
     }
 
     @Override
@@ -66,7 +66,6 @@ public class MovieTVPersonClass implements Parcelable {
         dest.writeString(poster_path);
         dest.writeString(first_air_date);
         dest.writeString(original_name);
-//        dest.writeFloat(vote_average);
         dest.writeString(release_date);
         dest.writeString(original_title);
         dest.writeString(media_type);
@@ -74,7 +73,9 @@ public class MovieTVPersonClass implements Parcelable {
         dest.writeString(profile_path);
         dest.writeFloat(popularity);
         dest.writeString(display_image);
-    }
+        dest.writeFloat(vote_average);
+
+        }
 
     @Override
     public int describeContents() {
