@@ -56,12 +56,20 @@ public class MainActivityFragment extends Fragment {
         private List<MovieTVPersonClass> parseResult(JsonArray jsonArray) {
             for (int i = 0; i < jsonArray.size(); i++) {
                 MovieTVPersonClass data = new Gson().fromJson(jsonArray.get(i), MovieTVPersonClass.class);
-                if(data.getMedia_type().equalsIgnoreCase(Utils.PERSON)){
-                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
+                if(data.getMedia_type()==null)
+                {
+                    getImage(movieType.get(i),data);
+
                 }
                 else {
-                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
+                    getImage(data.getMedia_type(),data);
                 }
+// if(data.getMedia_type().equalsIgnoreCase(Utils.PERSON)){
+//                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
+//                }
+//                else {
+//                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
+//                }
                     movieDetails.add(data);
             }
             return movieDetails;
@@ -101,12 +109,12 @@ public class MainActivityFragment extends Fragment {
                         appendPath(movieType.get(movieIds.indexOf(movieId))).appendPath(movieId.toString())
                         .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
                 String MOVIE_DB_URL = builtUri.toString();
-                JsonArray movieJsonArray = new JsonArray();
+                JsonArray multiJsonArray = new JsonArray();
 
                 try {
                     JsonObject jsonObject = new DownloadWebPageTask().execute(MOVIE_DB_URL).get();
-                    movieJsonArray.add(jsonObject);
-                    movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(movieJsonArray).get();
+                    multiJsonArray.add(jsonObject);
+                    movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(multiJsonArray).get();
                     if (movieDetails != null) {
                         imageAdapter.setGridData(movieDetails);
                     }
@@ -160,6 +168,15 @@ public class MainActivityFragment extends Fragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void getImage(String searchType, MovieTVPersonClass data){
+        if(searchType.equalsIgnoreCase(Utils.PERSON)){
+            data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
+        }
+        else {
+            data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
+        }
     }
 
     public interface PaneSelection {
