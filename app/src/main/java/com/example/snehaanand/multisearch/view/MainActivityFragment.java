@@ -58,7 +58,6 @@ public class MainActivityFragment extends Fragment {
                 MovieTVPersonClass data = new Gson().fromJson(jsonArray.get(i), MovieTVPersonClass.class);
                 if(data.getMedia_type().equalsIgnoreCase(Utils.PERSON)){
                     data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
-
                 }
                 else {
                     data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
@@ -87,7 +86,7 @@ public class MainActivityFragment extends Fragment {
         } else if (!isNetworkAvailable()) {
             Toast.makeText(getActivity().getBaseContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
        }
- else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
+        else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
             Cursor c = getActivity().getContentResolver().query(movies, null, null, null, MoviesProvider._ID);
             if (c != null && c.moveToFirst()) {
                 do {
