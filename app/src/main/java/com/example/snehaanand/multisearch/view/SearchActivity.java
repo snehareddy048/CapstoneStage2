@@ -21,12 +21,20 @@ import com.example.snehaanand.multisearch.utils.Utils;
 
 public class SearchActivity extends AppCompatActivity {
 EditText searchBar;
+    SharedPreferences sharedPrefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        SharedPreferences sharedPrefs =
+        sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(this);
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        //sets whats stored in shared preferences
         String sortType = sharedPrefs.getString(getString(R.string.pref_sort_key), Utils.SEARCH);
         if(sortType.equalsIgnoreCase(Utils.FAVORITE)){
             Intent intent = new Intent(SearchActivity.this, MainActivity.class);

@@ -58,18 +58,15 @@ public class MainActivityFragment extends Fragment {
                 MovieTVPersonClass data = new Gson().fromJson(jsonArray.get(i), MovieTVPersonClass.class);
                 if(data.getMedia_type()==null)
                 {
-                    getImage(movieType.get(i),data);
+                    String s = movieType.get(i);
+                    getImage(s,data);
+                    data.setMedia_type(s);
 
                 }
                 else {
                     getImage(data.getMedia_type(),data);
                 }
-// if(data.getMedia_type().equalsIgnoreCase(Utils.PERSON)){
-//                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
-//                }
-//                else {
-//                    data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
-//                }
+
                     movieDetails.add(data);
             }
             return movieDetails;

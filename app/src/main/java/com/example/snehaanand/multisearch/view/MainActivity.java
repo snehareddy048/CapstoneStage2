@@ -1,5 +1,6 @@
 package com.example.snehaanand.multisearch.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,4 +64,9 @@ Boolean mTwoPane;
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Utils.setDefaultSharedPrefs(this);
+    }
 }

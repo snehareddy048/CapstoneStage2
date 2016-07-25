@@ -73,8 +73,9 @@ public class MovieTVPersonClass implements Parcelable {
         dest.writeString(profile_path);
         dest.writeFloat(popularity);
         dest.writeString(display_image);
-        dest.writeFloat(vote_average);
-
+        if(vote_average!=null) {
+            dest.writeFloat(vote_average);
+        }
         }
 
     @Override
