@@ -32,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7029429216366427/9420225198");
+        MobileAds.initialize(getApplicationContext(),  "ca-app-pub-7029429216366427~7943491992");
 
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
