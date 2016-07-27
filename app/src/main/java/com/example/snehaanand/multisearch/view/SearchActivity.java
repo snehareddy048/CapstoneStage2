@@ -17,17 +17,27 @@ import android.view.MenuItem;
 
 import com.example.snehaanand.multisearch.R;
 import com.example.snehaanand.multisearch.utils.Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 
 public class SearchActivity extends AppCompatActivity {
-EditText searchBar;
+    EditText searchBar;
     SharedPreferences sharedPrefs;
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         sharedPrefs =
                 PreferenceManager.getDefaultSharedPreferences(this);
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-7029429216366427/9420225198");
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
 
     }
 
