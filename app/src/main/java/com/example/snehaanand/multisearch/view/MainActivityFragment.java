@@ -1,13 +1,18 @@
 package com.example.snehaanand.multisearch.view;
 
 import android.app.Fragment;
+
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by snehaanandyeluguri on 10/31/15.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     ArrayList<MovieTVPersonClass> movieDetails = new ArrayList<>();
     ArrayList<Integer> movieIds = new ArrayList<>();
     ArrayList<String> movieType = new ArrayList<>();
@@ -39,13 +44,44 @@ public class MainActivityFragment extends Fragment {
     public final String FAVORITE_MOVIES = "favorite_movies";
     public final String MOVIE_KEY = "movie_list_key";
     Uri movies;
+    private static final int SEARCH_LISTINGS_LOADER_ID =1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_main, container, false);
+
     }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Loader<Cursor> loader=null;
+        switch (id) {
+            case SEARCH_LISTINGS_LOADER_ID: {
+                loader = new CursorLoader(getActivity(),
+                        MoviesProvider.CONTENT_URI,
+                        new String[]{
+                                MoviesProvider._ID,
+                                MoviesProvider.SEARCH_RESULT_TYPE,
+                                       }, null, null, null);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
+        }
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
 
     private class GetImageTask extends AsyncTask<JsonArray, Void, List> {
         @Override
@@ -92,6 +128,8 @@ public class MainActivityFragment extends Fragment {
             Toast.makeText(getActivity().getBaseContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
        }
         else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
+//            getLoaderManager().restartLoader(SEARCH_LISTINGS_LOADER_ID, null, MainActivityFragment.this);
+
             Cursor c = getActivity().getContentResolver().query(movies, null, null, null, MoviesProvider._ID);
             if (c != null && c.moveToFirst()) {
                 do {
