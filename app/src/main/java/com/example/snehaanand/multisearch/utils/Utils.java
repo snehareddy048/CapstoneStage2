@@ -25,7 +25,7 @@ public class Utils
     public static String QUERY_PARAMETER_API="api_key";
     public static String FAVORITE_MOVIE_ID="favorite_id";
     public static String RESULTS="results";
-    public static String API_KEY="a9b7cc3f0852ce9d2f83d7ae160fce44";
+    public static String API_KEY="YOUR_API_KEY";
     public static String MOVIES_TEXT="movies";
     public static String SEARCH_STRING="search_string";
 
