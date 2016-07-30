@@ -16,7 +16,8 @@
 
     <!-- AdMob ad unit IDs -->
     <string name="banner_home_footer">ca-app-pub-7029429216366427/9420225198</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="search">SEARCH</string>
+    <string name="favorites">FAVORITES</string>
+
 
 </resources>

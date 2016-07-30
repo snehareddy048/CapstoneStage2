@@ -1,6 +1,6 @@
 package com.example.snehaanand.multisearch.view;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -44,8 +44,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public final String FAVORITE_MOVIES = "favorite_movies";
     public final String MOVIE_KEY = "movie_list_key";
     Uri movies;
-    private static final int SEARCH_LISTINGS_LOADER_ID =1;
-
+    private static final int SEARCH_FAVORITES_LOADER_ID =1;
+    ImageAdapter imageAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Loader<Cursor> loader=null;
         switch (id) {
-            case SEARCH_LISTINGS_LOADER_ID: {
+            case SEARCH_FAVORITES_LOADER_ID: {
                 loader = new CursorLoader(getActivity(),
                         MoviesProvider.CONTENT_URI,
                         new String[]{
@@ -74,7 +74,40 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data!=null&&data.getCount()!=0){
+            while (data.moveToNext()) {
+                Integer movieId = data.getInt(data.getColumnIndex(MoviesProvider._ID));
+                movieIds.add(movieId);
+                movieType.add(data.getString(data.getColumnIndex(MoviesProvider.SEARCH_RESULT_TYPE)));
+            }
+            JsonArray multiJsonArray = new JsonArray();
 
+            for (Integer movieId : movieIds) {
+                Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().
+                        appendPath(movieType.get(movieIds.indexOf(movieId))).appendPath(movieId.toString())
+                        .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
+                String MOVIE_DB_URL = builtUri.toString();
+                JsonObject jsonObject = null;
+                try {
+                    jsonObject = new DownloadWebPageTask().execute(MOVIE_DB_URL).get();
+                    multiJsonArray.add(jsonObject);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(multiJsonArray).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if (movieDetails != null) {
+                imageAdapter.setGridData(movieDetails);
+            }
+        }
     }
 
     @Override
@@ -112,7 +145,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageAdapter imageAdapter = new ImageAdapter(getActivity(), movieDetails);
+        imageAdapter = new ImageAdapter(getActivity(), movieDetails);
         String URL = "content://" + Utils.CONTENT_BASE_URL + "/" + Utils.MOVIES_TEXT;
         String sortType= getActivity().getIntent().getExtras().getString(Utils.SORT_STRING);
         movies = Uri.parse(URL);
@@ -128,37 +161,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             Toast.makeText(getActivity().getBaseContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
        }
         else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
-//            getLoaderManager().restartLoader(SEARCH_LISTINGS_LOADER_ID, null, MainActivityFragment.this);
 
-            Cursor c = getActivity().getContentResolver().query(movies, null, null, null, MoviesProvider._ID);
-            if (c != null && c.moveToFirst()) {
-                do {
-                    Integer movieId = c.getInt(c.getColumnIndex(MoviesProvider._ID));
-                    movieIds.add(movieId);
-                    movieType.add(c.getString(c.getColumnIndex(MoviesProvider.SEARCH_RESULT_TYPE)));
-                } while (c.moveToNext());
-            }
-
-            for (Integer movieId : movieIds) {
-                Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().
-                        appendPath(movieType.get(movieIds.indexOf(movieId))).appendPath(movieId.toString())
-                        .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
-                String MOVIE_DB_URL = builtUri.toString();
-                JsonArray multiJsonArray = new JsonArray();
-
-                try {
-                    JsonObject jsonObject = new DownloadWebPageTask().execute(MOVIE_DB_URL).get();
-                    multiJsonArray.add(jsonObject);
-                    movieDetails = (ArrayList<MovieTVPersonClass>) new GetImageTask().execute(multiJsonArray).get();
-                    if (movieDetails != null) {
-                        imageAdapter.setGridData(movieDetails);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
+               getLoaderManager().restartLoader(SEARCH_FAVORITES_LOADER_ID,null,MainActivityFragment.this);
         }
         else {
             MainActivity activity = (MainActivity) getActivity();
