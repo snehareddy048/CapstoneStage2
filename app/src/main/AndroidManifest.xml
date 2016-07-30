@@ -20,14 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.DetailsActivity" />
-        <activity android:name=".view.SettingsActivity" />
         <activity android:name=".view.MainActivity" />
 
         <provider
             android:name=".view.MoviesProvider"
             android:authorities="com.example.provider.MovieDB" />
 
-        <receiver android:name=".NewAppWidget">
+        <receiver android:name=".AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
