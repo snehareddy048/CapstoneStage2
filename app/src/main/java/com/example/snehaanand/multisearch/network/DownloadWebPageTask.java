@@ -18,52 +18,52 @@ public class DownloadWebPageTask extends android.os.AsyncTask<String, Void, Json
 
     public static final String URL_GET = "GET";
 
-        @Override
-        protected JsonObject doInBackground(String... urls) {
-            try {
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
+    @Override
+    protected JsonObject doInBackground(String... urls) {
+        try {
+            return downloadUrl(urls[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private JsonObject downloadUrl(String myurl) throws IOException {
+        InputStream is = null;
+
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod(URL_GET);
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            int response = conn.getResponseCode();
+            is = conn.getInputStream();
+
+            // Convert the InputStream into a string
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            String result = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
             }
-            return null;
-        }
-
-        private JsonObject downloadUrl(String myurl) throws IOException {
-            InputStream is = null;
-
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod(URL_GET);
-                conn.setDoInput(true);
-                // Starts the query
-                conn.connect();
-                int response = conn.getResponseCode();
-                is = conn.getInputStream();
-
-                // Convert the InputStream into a string
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-                String line;
-                String result = "";
-                while ((line = bufferedReader.readLine()) != null) {
-                    result += line;
-                }
-                return parseResult(result);
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
+            return parseResult(result);
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } finally {
+            if (is != null) {
+                is.close();
             }
         }
+    }
 
-        private JsonObject parseResult(String jsonElements) {
-            JsonElement jsonElement = new JsonParser().parse(jsonElements);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            return jsonObject;
-        }
+    private JsonObject parseResult(String jsonElements) {
+        JsonElement jsonElement = new JsonParser().parse(jsonElements);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        return jsonObject;
+    }
 
 }

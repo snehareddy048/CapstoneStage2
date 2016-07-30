@@ -20,7 +20,7 @@ public class DetailsActivity extends AppCompatActivity {
         MovieTVPersonClass movieClass = bundle.getParcelable(Utils.MOVIE_DETAILS_ACTIVITY);
         Boolean favoriteSetting = bundle.getBoolean(Utils.FAVORITE_SETTING);
         arguments.putParcelable(Utils.MOVIE_DETAILS, movieClass);
-        arguments.putBoolean(Utils.FAVORITE_MOVIE_ID,favoriteSetting);
+        arguments.putBoolean(Utils.FAVORITE_MOVIE_ID, favoriteSetting);
         DetailsActivityFragment fragment = new DetailsActivityFragment();
         fragment.setArguments(arguments);
 

@@ -23,7 +23,7 @@ public class ImageAdapter extends BaseAdapter {
         thumbIds = movieBitmaps;
     }
 
-    public ImageAdapter(Context c, ArrayList<String> list,ArrayList<MovieTVPersonClass> movieBitmaps) {
+    public ImageAdapter(Context c, ArrayList<String> list, ArrayList<MovieTVPersonClass> movieBitmaps) {
         context = c;
         thumbIds = movieBitmaps;
     }

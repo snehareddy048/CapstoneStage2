@@ -1,18 +1,16 @@
 package com.example.snehaanand.multisearch.view;
 
-import android.support.v4.app.Fragment;
-
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by snehaanandyeluguri on 10/31/15.
  */
-public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ListActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     ArrayList<MovieTVPersonClass> movieDetails = new ArrayList<>();
     ArrayList<Integer> movieIds = new ArrayList<>();
     ArrayList<String> movieType = new ArrayList<>();
@@ -44,8 +42,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public final String FAVORITE_MOVIES = "favorite_movies";
     public final String MOVIE_KEY = "movie_list_key";
     Uri movies;
-    private static final int SEARCH_FAVORITES_LOADER_ID =1;
+    private static final int SEARCH_FAVORITES_LOADER_ID = 1;
     ImageAdapter imageAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Loader<Cursor> loader=null;
+        Loader<Cursor> loader = null;
         switch (id) {
             case SEARCH_FAVORITES_LOADER_ID: {
                 loader = new CursorLoader(getActivity(),
@@ -63,7 +62,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                         new String[]{
                                 MoviesProvider._ID,
                                 MoviesProvider.SEARCH_RESULT_TYPE,
-                                       }, null, null, null);
+                        }, null, null, null);
                 break;
             }
             default:
@@ -74,7 +73,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(data!=null&&data.getCount()!=0){
+        if (data != null && data.getCount() != 0) {
             while (data.moveToNext()) {
                 Integer movieId = data.getInt(data.getColumnIndex(MoviesProvider._ID));
                 movieIds.add(movieId);
@@ -125,18 +124,16 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         private List<MovieTVPersonClass> parseResult(JsonArray jsonArray) {
             for (int i = 0; i < jsonArray.size(); i++) {
                 MovieTVPersonClass data = new Gson().fromJson(jsonArray.get(i), MovieTVPersonClass.class);
-                if(data.getMedia_type()==null)
-                {
+                if (data.getMedia_type() == null) {
                     String s = movieType.get(i);
-                    getImage(s,data);
+                    getImage(s, data);
                     data.setMedia_type(s);
 
-                }
-                else {
-                    getImage(data.getMedia_type(),data);
+                } else {
+                    getImage(data.getMedia_type(), data);
                 }
 
-                    movieDetails.add(data);
+                movieDetails.add(data);
             }
             return movieDetails;
         }
@@ -147,7 +144,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         super.onActivityCreated(savedInstanceState);
         imageAdapter = new ImageAdapter(getActivity(), movieDetails);
         String URL = "content://" + Utils.CONTENT_BASE_URL + "/" + Utils.MOVIES_TEXT;
-        String sortType= getActivity().getIntent().getExtras().getString(Utils.SORT_STRING);
+        String sortType = getActivity().getIntent().getExtras().getString(Utils.SORT_STRING);
         movies = Uri.parse(URL);
 
         gridview = (GridView) getActivity().findViewById(R.id.gridView);
@@ -159,14 +156,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             imageAdapter.setGridData(movieDetails);
         } else if (!isNetworkAvailable()) {
             Toast.makeText(getActivity().getBaseContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
-       }
-        else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
+        } else if (sortType.equalsIgnoreCase(Utils.FAVORITE)) {
 
-               getLoaderManager().restartLoader(SEARCH_FAVORITES_LOADER_ID,null,MainActivityFragment.this);
-        }
-        else {
-            MainActivity activity = (MainActivity) getActivity();
-            String searchString= activity.getIntent().getExtras().getString(Utils.SEARCH_STRING);
+            getLoaderManager().restartLoader(SEARCH_FAVORITES_LOADER_ID, null, ListActivityFragment.this);
+        } else {
+            ListActivity activity = (ListActivity) getActivity();
+            String searchString = activity.getIntent().getExtras().getString(Utils.SEARCH_STRING);
             Uri builtUri = Uri.parse(Utils.MOVIEDB_BASE_URL).buildUpon().appendPath(Utils.PATH_SEARCH).
                     appendPath(Utils.PATH_MULTI).appendQueryParameter(Utils.PATH_QUERY, searchString)
                     .appendQueryParameter(Utils.QUERY_PARAMETER_API, Utils.API_KEY).build();
@@ -190,13 +185,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 MovieTVPersonClass movieClass = movieDetails.get(position);
-                Cursor cursor = getActivity().getContentResolver().query(movies, null, MoviesProvider._ID+"=?", new String[]{movieClass.getId().toString()}, MoviesProvider._ID);
-                boolean favoriteSetting=false;
+                Cursor cursor = getActivity().getContentResolver().query(movies, null, MoviesProvider._ID + "=?", new String[]{movieClass.getId().toString()}, MoviesProvider._ID);
+                boolean favoriteSetting = false;
                 cursor.moveToFirst();
-                if(cursor!=null&cursor.getCount()>0){
-                    favoriteSetting=true;
+                if (cursor != null & cursor.getCount() > 0) {
+                    favoriteSetting = true;
                 }
-                PaneSelection paneSelection = (MainActivityFragment.PaneSelection) getActivity();
+                PaneSelection paneSelection = (ListActivityFragment.PaneSelection) getActivity();
                 paneSelection.onItemSelection(movieClass, favoriteSetting);
             }
         });
@@ -209,11 +204,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void getImage(String searchType, MovieTVPersonClass data){
-        if(searchType.equalsIgnoreCase(Utils.PERSON)){
+    private void getImage(String searchType, MovieTVPersonClass data) {
+        if (searchType.equalsIgnoreCase(Utils.PERSON)) {
             data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getProfile_path());
-        }
-        else {
+        } else {
             data.setDisplay_image("http://image.tmdb.org/t/p/w185/" + data.getPoster_path());
         }
     }

@@ -42,21 +42,17 @@ public class TrailerAdapter extends BaseAdapter {
 
     }
 
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        LayoutInflater inflater =  context.getLayoutInflater();
+        LayoutInflater inflater = context.getLayoutInflater();
 
-        if (convertView == null)
-        {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_trailer_row, null);
             holder = new ViewHolder();
             holder.trailerName = (TextView) convertView.findViewById(R.id.trailerName);
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 

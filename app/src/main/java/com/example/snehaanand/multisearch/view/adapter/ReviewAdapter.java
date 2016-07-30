@@ -3,6 +3,7 @@ package com.example.snehaanand.multisearch.view.adapter;
 /**
  * Created by snehaanandyeluguri on 10/18/15.
  */
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,7 @@ import com.example.snehaanand.multisearch.R;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter extends BaseAdapter
-{
+public class ReviewAdapter extends BaseAdapter {
     Activity context;
     ArrayList<String> author;
     ArrayList<String> content;
@@ -44,22 +44,18 @@ public class ReviewAdapter extends BaseAdapter
         TextView txtViewContent;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        LayoutInflater inflater =  context.getLayoutInflater();
+        LayoutInflater inflater = context.getLayoutInflater();
 
-        if (convertView == null)
-        {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_review_row, null);
             holder = new ViewHolder();
             holder.txtViewAuthor = (TextView) convertView.findViewById(R.id.author);
             holder.txtViewContent = (TextView) convertView.findViewById(R.id.content);
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 

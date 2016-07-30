@@ -8,14 +8,13 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.snehaanand.multisearch.utils.Utils;
-import com.example.snehaanand.multisearch.view.MainActivity;
+import com.example.snehaanand.multisearch.view.ListActivity;
 import com.example.snehaanand.multisearch.view.SearchActivity;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class AppWidget extends AppWidgetProvider {
-
 
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -25,13 +24,13 @@ public class AppWidget extends AppWidgetProvider {
 
         Intent intent = new Intent(context, SearchActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.search,pendingIntent);
+        views.setOnClickPendingIntent(R.id.search, pendingIntent);
 
 
-        intent = new Intent(context, MainActivity.class);
+        intent = new Intent(context, ListActivity.class);
         intent.putExtra(Utils.SORT_STRING, Utils.FAVORITE);
         pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.favorite,pendingIntent);
+        views.setOnClickPendingIntent(R.id.favorite, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

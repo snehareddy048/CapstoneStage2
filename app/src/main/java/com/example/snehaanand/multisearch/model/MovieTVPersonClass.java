@@ -2,7 +2,6 @@ package com.example.snehaanand.multisearch.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.renderscript.Float2;
 
 /**
  * Created by snehaanandyeluguri on 7/17/16.
@@ -44,7 +43,7 @@ public class MovieTVPersonClass implements Parcelable {
 
 
     protected MovieTVPersonClass(Parcel in) {
-        id=in.readInt();
+        id = in.readInt();
         overview = in.readString();
         poster_path = in.readString();
         first_air_date = in.readString();
@@ -56,7 +55,7 @@ public class MovieTVPersonClass implements Parcelable {
         profile_path = in.readString();
         popularity = in.readFloat();
         display_image = in.readString();
-        vote_average=in.readFloat();
+        vote_average = in.readFloat();
     }
 
     @Override
@@ -73,10 +72,10 @@ public class MovieTVPersonClass implements Parcelable {
         dest.writeString(profile_path);
         dest.writeFloat(popularity);
         dest.writeString(display_image);
-        if(vote_average!=null) {
+        if (vote_average != null) {
             dest.writeFloat(vote_average);
         }
-        }
+    }
 
     @Override
     public int describeContents() {

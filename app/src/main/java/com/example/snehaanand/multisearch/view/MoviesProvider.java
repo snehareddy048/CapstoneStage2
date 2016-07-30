@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
 
 import com.example.snehaanand.multisearch.utils.Utils;
 
@@ -20,9 +19,9 @@ import java.util.HashMap;
 /**
  * Created by snehaanandyeluguri on 10/31/15.
  */
-public class MoviesProvider  extends ContentProvider {
+public class MoviesProvider extends ContentProvider {
     static final String PROVIDER_NAME = Utils.CONTENT_BASE_URL;
-    static final String URL = "content://" + PROVIDER_NAME + "/"+Utils.MOVIES_TEXT;
+    static final String URL = "content://" + PROVIDER_NAME + "/" + Utils.MOVIES_TEXT;
     static final Uri CONTENT_URI = Uri.parse(URL);
 
 
@@ -36,7 +35,8 @@ public class MoviesProvider  extends ContentProvider {
 //    static final int SEARCH_RESULT_TYPE = 3;
 
     static final UriMatcher uriMatcher;
-    static{
+
+    static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT, SEARCH_RESULT);
 //        uriMatcher.addURI(PROVIDER_NAME, Utils.MOVIES_TEXT+"/#", SEARCH_RESULT_TYPE);
@@ -51,21 +51,20 @@ public class MoviesProvider  extends ContentProvider {
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + MOVIES_TABLE_NAME +
-                    " ("+_ID+" INTEGER NOT NULL UNIQUE, "+
-    SEARCH_RESULT_TYPE+" TEXT NOT NULL);";
+                    " (" + _ID + " INTEGER NOT NULL UNIQUE, " +
+                    SEARCH_RESULT_TYPE + " TEXT NOT NULL);";
 
     /**
      * Helper class that actually creates and manages
      * the provider's underlying data repository.
      */
     private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context){
+        DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
         @Override
-        public void onCreate(SQLiteDatabase db)
-        {
+        public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_DB_TABLE);
         }
 
@@ -86,7 +85,7 @@ public class MoviesProvider  extends ContentProvider {
          * creation if it doesn't already exist.
          */
         db = dbHelper.getWritableDatabase();
-        return (db == null)? false:true;
+        return (db == null) ? false : true;
     }
 
     @Override
@@ -100,8 +99,7 @@ public class MoviesProvider  extends ContentProvider {
          * If record is added successfully
          */
 
-        if (rowID > 0)
-        {
+        if (rowID > 0) {
             Uri _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
             getContext().getContentResolver().notifyChange(_uri, null);
             return _uri;
@@ -110,7 +108,7 @@ public class MoviesProvider  extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(MOVIES_TABLE_NAME);
 
@@ -127,13 +125,13 @@ public class MoviesProvider  extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
 
-        if (sortOrder == null || sortOrder == ""){
+        if (sortOrder == null || sortOrder == "") {
             /**
              * By default sort on movie names
              */
             sortOrder = _ID;
         }
-        Cursor c = queryBuilder.query(db,	projection,	selection, selectionArgs,null, null, sortOrder);
+        Cursor c = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 
         /**
          * register to watch a content URI for changes
@@ -146,7 +144,7 @@ public class MoviesProvider  extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int count = 0;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SEARCH_RESULT:
                 count = db.delete(MOVIES_TABLE_NAME, selection, selectionArgs);
                 break;
@@ -169,7 +167,7 @@ public class MoviesProvider  extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int count = 0;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SEARCH_RESULT:
                 count = db.update(MOVIES_TABLE_NAME, values, selection, selectionArgs);
                 break;
@@ -180,7 +178,7 @@ public class MoviesProvider  extends ContentProvider {
 //                break;
 
             default:
-                throw new IllegalArgumentException("Unknown URI " + uri );
+                throw new IllegalArgumentException("Unknown URI " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
@@ -188,12 +186,12 @@ public class MoviesProvider  extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             /**
              * Get all movie records
              */
             case SEARCH_RESULT:
-                return "vnd.android.cursor.dir/vnd.example."+Utils.MOVIES_TEXT;
+                return "vnd.android.cursor.dir/vnd.example." + Utils.MOVIES_TEXT;
 
             /**
              * Get a particular movie

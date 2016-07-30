@@ -6,8 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by snehaanandyeluguri on 10/18/15.
  */
-public class TrailerClass implements Parcelable
-{
+public class TrailerClass implements Parcelable {
     private String name;
 
     private String key;

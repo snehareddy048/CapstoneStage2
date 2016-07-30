@@ -82,16 +82,14 @@ public class DetailsActivityFragment extends Fragment {
                 releaseDate.setText(movieDetails.getRelease_date());
                 movieName.setText(movieDetails.getOriginal_title());
                 synopsis.setText(movieDetails.getOverview());
-                if(vote_average!=null)
-                {
+                if (vote_average != null) {
                     userRating.setText(vote_average.toString());
                 }
-                } else if (movieDetails.getMedia_type().equalsIgnoreCase(Utils.TV)) {
+            } else if (movieDetails.getMedia_type().equalsIgnoreCase(Utils.TV)) {
                 releaseDate.setText(movieDetails.getFirst_air_date());
                 movieName.setText(movieDetails.getOriginal_name());
                 synopsis.setText(movieDetails.getOverview());
-                if(vote_average!=null)
-                {
+                if (vote_average != null) {
                     userRating.setText(vote_average.toString());
                 }
             } else if (movieDetails.getMedia_type().equalsIgnoreCase(Utils.PERSON)) {
