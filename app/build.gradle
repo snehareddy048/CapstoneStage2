@@ -16,7 +16,7 @@ android {
         config {
             keyAlias 'MyAndroidKey'
             keyPassword '87654321'
-            storeFile file('/Users/snehaanandyeluguri/Desktop/udacity/MultiSearch/keystore/android.jks')
+            storeFile file('keystore/android.jks')
             storePassword '87654321'
         }
     }
